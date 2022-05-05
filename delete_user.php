@@ -1,21 +1,22 @@
 <?php
 
+
 // include database connection
 include 'config/config.php';
 
 // Extract, validate and sanitize the id.
-$id = ($_GET['id'] !== null && (int)$_GET['id'] > 0)? mysqli_real_escape_string($con, (int)$_GET['id']) : false;
+$id = ($_GET['id'] !== null && (int)$_GET['id'] > 0)? mysqli_real_escape_string($conn, (int)$_GET['id']) : false;
 
 if($id)
 {
   	// Delete.
-	$sql = "DELETE FROM Users WHERE id =$id";
+	 $sql = "DELETE FROM users WHERE ID =$id";
 
-	if(mysqli_query($con, $sql))
+	if(mysqli_query($conn,$sql))
 	{
 	  //http_response_code(204);
 	$response = [
-      'status' => true,
+      'status' => 200,
       'message' => 'User was deleted successfully'
     ];
    
@@ -23,7 +24,7 @@ if($id)
 	else
 	{
 		$response = [
-	      'status' => false,
+	      'status' => 404,
 	      'message' => 'User id not found'
 	    ];
 	}
