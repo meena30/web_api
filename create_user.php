@@ -12,27 +12,26 @@ if(isset($postdata) && !empty($postdata))
   $request = json_decode($postdata);
 
  // Escape user inputs for security
-$fname = mysqli_real_escape_string($con, trim($request->firstName));
-$lname = mysqli_real_escape_string($con, trim($request->lastName));
-$email = mysqli_real_escape_string($con, trim($request->email));
-$password = mysqli_real_escape_string($con, trim($request->password));
+$fname = mysqli_real_escape_string($conn, trim($request->firstName));
+$lname = mysqli_real_escape_string($conn, trim($request->lastName));
+$email = mysqli_real_escape_string($conn, trim($request->email));
+$password = mysqli_real_escape_string($conn, trim($request->password));
 
 
   // Create.
-  	$sql = "INSERT INTO Users (FirstName, LastName, Email, Password) VALUES ('$fname', '$lname', '$email', md5('$password'))";
+  	$sql = "INSERT INTO users (FirstName, LastName, Email, Password) VALUES ('$fname', '$lname', '$email', md5('$password'))";
 
-	if(mysqli_query($con, $sql)){
+	if(mysqli_query($conn, $sql)){
 	    //echo "Records added successfully.";
-
-	   $response = [
-      'fname' => $fname,
-      'lname' => $lname,
-      'email'    => $email
+    $response = [
+      'status' => 200,
+      'message' => 'User created successfully'
     ];
+
     echo json_encode($response);
 
 	} else{
-	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 	}
 
   /*if(mysqli_query($con,$sql))
@@ -54,5 +53,5 @@ $password = mysqli_real_escape_string($con, trim($request->password));
 }
 
 // Close connection
-mysqli_close($con);
+mysqli_close($conn);
 ?>
